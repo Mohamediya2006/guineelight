@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GuinéeLight</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 16px;
+      background: #f5f5f5;
+    }
+    #chat {
+      height: 70vh;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      padding: 10px;
+      background: white;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    .user-msg { text-align: right; color: blue; }
+    .bot-msg { text-align: left; color: green; }
+    #input-area {
+      display: flex;
+      gap: 8px;
+    }
+    input {
+      flex: 1;
+      padding: 10px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 16px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    @media (max-width: 600px) {
+     input { font-size: 14px; padding: 8px; }
+     button { padding: 8px 12px; font-size: 14px; }
+     #chat { height: 60vh; }
+   }
+  </style>
+</head>
+<body>
+  <h2>GuinéeLight – Signaler une panne</h2>
+  <div id="chat"></div>
+  <div id="input-area">
+    <input type="text" id="user-input" placeholder="Ex: Il y a une panne à Kaloum..." />
+    <button onclick="sendMessage()">Envoyer</button>
+  </div>
+
+  <script>
+    function addMessage(text, isUser = true) {
+      const chat = document.getElementById("chat");
+      const msgDiv = document.createElement("div");
+      msgDiv.className = isUser ? "user-msg" : "bot-msg";
+      msgDiv.innerText = text;
+      chat.appendChild(msgDiv);
+      chat.scrollTop = chat.scrollHeight; // Scroll automatique
+    }
+
+    function sendMessage() {
+      const input = document.getElementById("user-input");
+      const text = input.value.trim();
+      if (!text) return;
+
+      addMessage(text, true); // Affiche le message utilisateur
+      input.value = "";
+
+      // Pour l’instant : réponse simulée (on remplacera ça par Dialogflow plus tard)
+      setTimeout(() => {
+        addMessage("Merci ! Votre signalement a été enregistré.", false);
+      }, 500);
+    }
+
+    // Permet d’envoyer avec la touche Entrée
+    document.getElementById("user-input").addEventListener("keypress", (e) => {
+      if (e.key === "Enter") sendMessage();
+    });
+  </script>
+</body>
+</html>
